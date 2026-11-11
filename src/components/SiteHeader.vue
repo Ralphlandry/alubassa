@@ -2,6 +2,7 @@
 import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { logoImg as logo } from '../assets/images'
+import { locale, setLocale, t } from '../i18n'
 
 const route = useRoute()
 const nv = ref(null)
@@ -43,6 +44,10 @@ watch(active, async () => {
   await nextTick()
   mv(activeEl())
 })
+watch(locale, async () => {
+  await nextTick()
+  mv(activeEl())
+})
 watch(
   () => route.fullPath,
   () => {
@@ -66,6 +71,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-<header :class="{ sc: scrolled }"><div class="w"><RouterLink class="logo" to="/" aria-label="Alubassa, accueil"><img :src="logo" alt="Logo Alubassa" width="46" height="46" style="border-radius:50%;display:block"></RouterLink>
-<nav id="nv" ref="nv" :class="{ open: menuOpen }" @mouseleave="mv(activeEl())"><i id="nvi" ref="ind"></i><RouterLink to="/" :class="{ on: active === 'home' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">Accueil</RouterLink><RouterLink to="/a-propos" :class="{ on: active === 'about' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">À propos</RouterLink><RouterLink to="/packs" :class="{ on: active === 'packs' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">Nos packs</RouterLink><RouterLink to="/actualites" :class="{ on: active === 'news' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">Actualités</RouterLink><RouterLink class="cta" to="/contact">Contact</RouterLink></nav><button class="bg" id="bg" aria-label="Menu" :aria-expanded="String(menuOpen)" @click="menuOpen = !menuOpen"><span></span><span></span><span></span></button></div></header>
+<header :class="{ sc: scrolled }"><div class="w"><RouterLink class="logo" to="/" :aria-label="`Alubassa, ${t('Accueil').toLowerCase()}`"><img :src="logo" :alt="t('Logo Alubassa')" width="46" height="46" style="border-radius:50%;display:block"></RouterLink>
+<nav id="nv" ref="nv" :class="{ open: menuOpen }" @mouseleave="mv(activeEl())"><i id="nvi" ref="ind"></i><RouterLink to="/" :class="{ on: active === 'home' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">{{ t('Accueil') }}</RouterLink><RouterLink to="/a-propos" :class="{ on: active === 'about' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">{{ t('À propos') }}</RouterLink><RouterLink to="/packs" :class="{ on: active === 'packs' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">{{ t('Nos packs') }}</RouterLink><RouterLink to="/actualites" :class="{ on: active === 'news' }" @mouseenter="mv($event.currentTarget)" @focus="mv($event.currentTarget)">{{ t('Actualités') }}</RouterLink><RouterLink class="cta" to="/contact">{{ t('Contact') }}</RouterLink><div class="language-switch"><button type="button" :aria-label="t('Français')" :aria-pressed="locale === 'fr'" @click="setLocale('fr')">FR</button><button type="button" :aria-label="t('Anglais')" :aria-pressed="locale === 'en'" @click="setLocale('en')">EN</button></div></nav><button class="bg" id="bg" :aria-label="t('Menu')" :aria-expanded="String(menuOpen)" @click="menuOpen = !menuOpen"><span></span><span></span><span></span></button></div></header>
 </template>

@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { news } from '../data/news'
 import { prefersReducedMotion } from '../utils'
+import { t } from '../i18n'
 import NewsCard from './NewsCard.vue'
 
 // Slider horizontal des actualités (accueil) : défilement automatique, flèches et barre de progression
@@ -35,5 +36,5 @@ onBeforeUnmount(() => clearInterval(timer))
 </script>
 
 <template>
-<div class="nws"><div class="nwt" id="nwh" ref="track" @scroll.passive="update" @mouseenter="pause(true)" @mouseleave="pause(false)" @touchstart.passive="pause(true)" @touchend.passive="touchEnd"><NewsCard v-for="(n, i) in news" :key="n.id" :item="n" :index="i" /></div></div><div class="nsc"><div class="nsp"><i id="nsb" :style="{ width: progress }"></i></div><button id="nsp" aria-label="Précédent" @click="prev">←</button><button id="nsn" aria-label="Suivant" @click="next">→</button></div>
+<div class="nws"><div class="nwt" id="nwh" ref="track" @scroll.passive="update" @mouseenter="pause(true)" @mouseleave="pause(false)" @touchstart.passive="pause(true)" @touchend.passive="touchEnd"><NewsCard v-for="(n, i) in news" :key="n.id" :item="n" :index="i" /></div></div><div class="nsc"><div class="nsp"><i id="nsb" :style="{ width: progress }"></i></div><button id="nsp" :aria-label="t('Précédent')" @click="prev">←</button><button id="nsn" :aria-label="t('Suivant')" @click="next">→</button></div>
 </template>

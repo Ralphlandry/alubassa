@@ -7,6 +7,7 @@ import SiteFooter from './components/SiteFooter.vue'
 import PromoPopup from './components/PromoPopup.vue'
 import ToastMessage from './components/ToastMessage.vue'
 import { revealElements } from './composables/reveal'
+import { t } from './i18n'
 
 const route = useRoute()
 
@@ -29,8 +30,8 @@ watch(() => route.fullPath, revealFooter)
     <SiteFooter />
     <PromoPopup />
     <ToastMessage />
-    <a class="wa" href="https://wa.me/237688360910?text=Bonjour%20Alubassa" target="_blank" rel="noopener"
-      aria-label="Contacter Alubassa sur WhatsApp">
+    <a class="wa" :href="'https://wa.me/237688360910?text=' + encodeURIComponent(t('Bonjour Alubassa'))" target="_blank" rel="noopener"
+      :aria-label="t('Contacter Alubassa sur WhatsApp')">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <path d="M16 3.5a12 12 0 0 0-10.3 18.2L4.5 28l6.5-1.2A12 12 0 1 0 16 3.5Z" />
         <path

@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { packs } from '../data/packs'
 import { packImg } from '../assets/images'
 import { waOrder, prefersReducedMotion } from '../utils'
+import { t } from '../i18n'
 
 // Slider 3D « Nos produits en vedette » : défilement automatique, flèches, clic et glissement
 const cur = ref(0)
@@ -54,7 +55,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-<div class="stage3d"><h2>Nos produits en vedette</h2><p class="sub">Glissez ou utilisez les flèches pour parcourir les packs</p>
-<div class="cv" id="cv" aria-roledescription="carrousel" aria-label="Packs Alubassa" @mouseenter="stop" @mouseleave="play" @pointerdown="down" @pointerup="up"><div class="tr" id="tr"><div v-for="(p, i) in packs" :key="p.id" class="it" :data-i="i" :style="itemStyle(i)" @click="select(i)"><img :src="packImg[p.img]" :alt="p.name"><div>{{ p.name }}<b>{{ p.price }} F</b></div></div></div></div>
-<div class="nv"><button id="pv" aria-label="Précédent" @click="prev">←</button><a id="oc" :href="waOrder(packs[cur].name)" target="_blank" rel="noopener">Commander ce pack</a><button id="nx" aria-label="Suivant" @click="next">→</button></div></div>
+<div class="stage3d"><h2>{{ t('Nos produits en vedette') }}</h2><p class="sub">{{ t('Glissez ou utilisez les flèches pour parcourir les packs') }}</p>
+<div class="cv" id="cv" aria-roledescription="carrousel" :aria-label="t('Packs Alubassa')" @mouseenter="stop" @mouseleave="play" @pointerdown="down" @pointerup="up"><div class="tr" id="tr"><div v-for="(p, i) in packs" :key="p.id" class="it" :data-i="i" :style="itemStyle(i)" @click="select(i)"><img :src="packImg[p.img]" :alt="t(p.name)"><div>{{ t(p.name) }}<b>{{ p.price }} F</b></div></div></div></div>
+<div class="nv"><button id="pv" :aria-label="t('Précédent')" @click="prev">←</button><a id="oc" :href="waOrder(packs[cur].name)" target="_blank" rel="noopener">{{ t('Commander ce pack') }}</a><button id="nx" :aria-label="t('Suivant')" @click="next">→</button></div></div>
 </template>

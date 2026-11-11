@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { newsImg } from '../assets/images'
+import { t } from '../i18n'
 
 // Fenêtre d'offre : affichée une seule fois, 10 secondes après l'arrivée sur le site
 const KEY = 'alubassa_promo_v1'
@@ -50,5 +51,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-<div class="pp" id="pp" v-show="open" @click.self="close"><div class="pc" role="dialog" aria-modal="true" aria-label="Offre spéciale Alubassa"><button class="px" id="px" ref="closeBtn" aria-label="Fermer" @click="close">×</button><img id="ppi" :src="newsImg.maman" alt="Pour maman : Pack Mother’s Shine à 15 000 FCFA et Pack Moula à 5 000 FCFA" width="640" height="640"><RouterLink class="cta" id="pb" to="/packs" @click="close">Voir les packs</RouterLink></div></div>
+<div class="pp" id="pp" v-show="open" @click.self="close"><div class="pc" role="dialog" aria-modal="true" :aria-label="t('Offre spéciale Alubassa')"><button class="px" id="px" ref="closeBtn" :aria-label="t('Fermer')" @click="close">×</button><img id="ppi" :src="newsImg.maman" :alt="t('Pour maman : Pack Mother’s Shine à 15 000 FCFA et Pack Moula à 5 000 FCFA')" width="640" height="640"><RouterLink class="cta" id="pb" to="/packs" @click="close">{{ t('Voir les packs') }}</RouterLink></div></div>
 </template>
