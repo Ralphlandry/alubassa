@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { logoImg as logo, packImg, photos } from '../assets/images'
 import floatingProduct from '../assets/img/DSC08527-Photoroom.png'
-import alucamLogo from '../assets/img/alu.png'
+import alucamLogo from '../assets/img/partners/ALUCAM-ASI-news-Logo.jpg'
 import { prefersReducedMotion } from '../utils'
 import { useToast } from '../composables/useToast'
 import { revealWithin } from '../composables/reveal'
