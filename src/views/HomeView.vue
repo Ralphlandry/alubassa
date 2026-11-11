@@ -13,8 +13,10 @@ import NewsSlider from '../components/NewsSlider.vue'
 const root = ref(null)
 const rsk = ref(null)
 const status = ref(null)
+const catalogueDownloading = ref(false)
 let rsPaused = false
 let rsTimer
+let catalogueTimer
 
 // Voyant « Ouvert maintenant » : horaires de la boutique, heure de Douala
 function computeStatus() {
@@ -34,6 +36,11 @@ const rsStep = () => rsk.value.children[0].offsetWidth + 14
 const rsNext = () => rsk.value.scrollBy({ left: rsStep(), behavior: 'smooth' })
 const rsPrev = () => rsk.value.scrollBy({ left: -rsStep(), behavior: 'smooth' })
 const pauseRs = (v) => { rsPaused = v }
+const startCatalogueDownload = () => {
+  catalogueDownloading.value = true
+  clearTimeout(catalogueTimer)
+  catalogueTimer = setTimeout(() => { catalogueDownloading.value = false }, 2000)
+}
 
 onMounted(() => {
   computeStatus()
@@ -47,7 +54,10 @@ onMounted(() => {
     }, 4200)
   }
 })
-onBeforeUnmount(() => clearInterval(rsTimer))
+onBeforeUnmount(() => {
+  clearInterval(rsTimer)
+  clearTimeout(catalogueTimer)
+})
 </script>
 
 <template>
@@ -73,7 +83,7 @@ onBeforeUnmount(() => clearInterval(rsTimer))
 <section class="hs"><div class="w"><div class="hh hr"><em>Alubassa</em><h2>{{ t('Galerie photos') }}</h2><i></i></div><div class="glr"><figure class="gi hr" style="--d:0"><img :src="photos.walk1" :alt="t('L’équipe Alubassa')" loading="lazy"><figcaption>{{ t('L’équipe Alubassa') }}</figcaption></figure><figure class="gi hr" style="--d:1"><img :src="photos.walk2" :alt="t('Canton Bassa')" loading="lazy"><figcaption>{{ t('Canton Bassa') }}</figcaption></figure><figure class="gi hr" style="--d:2"><img :src="photos.shop" :alt="t('La boutique du Marché Congo')" loading="lazy"><figcaption>{{ t('La boutique du Marché Congo') }}</figcaption></figure><figure class="gi hr" style="--d:3"><img :src="packImg.pizza" :alt="t('Pack Pizza')" loading="lazy"><figcaption>{{ t('Pack Pizza') }}</figcaption></figure><figure class="gi hr" style="--d:4"><img :src="packImg.chopa" :alt="t('Pack Chop A')" loading="lazy"><figcaption>{{ t('Pack Chop A') }}</figcaption></figure></div></div></section>
 <section class="hs soft"><div class="w"><div class="hh hr"><em>Alubassa</em><h2>{{ t('Partenaire officiel') }}</h2><i></i></div><div class="ptn"><div class="pn hr" style="--d:0"><div class="lg"><img :src="alucamLogo" :alt="t('Logo Alucam, compagnie camerounaise d’aluminium')"></div><h3>Alucam</h3></div></div></div></section>
 <section class="hs"><div class="w"><div class="hh hr"><em>Alubassa</em><h2>{{ t('Actualités') }}</h2><i></i></div><NewsSlider /><p class="c hr" style="margin:34px 0 0"><RouterLink class="cta" to="/actualites">{{ t('Toutes les actualités') }}</RouterLink></p></div></section>
-<section class="hs soft"><div class="w"><div class="nl hr"><img :src="logo" alt="" width="84" height="84"><div><em>{{ t('Catalogue') }}</em><h2>{{ t('Télécharger et consulter tous nos produits dans notre catalogue') }}</h2></div><a class="cta" id="cat" :href="cataloguePdf" download="catalogue-alubassa.pdf">{{ t('Télécharger') }}</a></div></div></section>
+<section class="hs soft"><div class="w"><div class="nl hr"><img :src="logo" alt="" width="84" height="84"><div><em>{{ t('Catalogue') }}</em><h2>{{ t('Télécharger et consulter tous nos produits dans notre catalogue') }}</h2></div><span class="nl-action" :class="{ 'is-downloading': catalogueDownloading }"><span class="nl-game" aria-hidden="true"><svg class="nl-arrow" viewBox="0 0 40 40"><path d="M4 20h27m-9-9 9 9-9 9"/></svg><span class="nl-box"><img class="nl-product" :src="floatingProduct" alt=""><i class="nl-carton-lid"></i><i class="nl-carton"></i></span></span><a class="cta" id="cat" :href="cataloguePdf" download="catalogue-alubassa.pdf" @click="startCatalogueDownload">{{ t('Télécharger') }}</a></span></div></div></section>
 <div class="cert"><div class="w"><img :src="logo" alt="" width="44" height="44" class="rv2 rv2-up" style="border-radius:50%;--d:0"><span class="rv2 rv2-up" style="--d:1"><b>ISO 9001</b> · Bureau Veritas</span><span class="rv2 rv2-up" style="--d:2">{{ t('100 % aluminium pur') }}</span><span class="rv2 rv2-up" style="--d:3">{{ t('Fabriqué au Cameroun') }}</span></div></div>
 </main>
 </template>
